@@ -11,6 +11,16 @@ let generateEmptyArrangement = () => {
     }
 }
 
+let getArrangementScore = () => {
+    let totalScore = 0;
+    for (let i = 0; i < size; i++) {
+        for (let j = 0; j < size; j++) {
+            totalScore += getFlowerScore(i, j);
+        }
+    }
+    return totalScore;
+}
+
 let getFlowerScore = (x, y) => {
     let flowerIndex = (x * size + y);
     let flower = flowerArrangement[flowerIndex];
@@ -24,11 +34,17 @@ let getFlowerScore = (x, y) => {
                 let otherFlowerIndex = ((x + i) * size + (y + j));
                 let otherFlower = flowerArrangement[otherFlowerIndex];
                 totalScore += flower.getSynergy(otherFlower.name);
-                console.log (otherFlower.name);
-                console.log (flower.getSynergy(otherFlower.name));
             }
         }
     }
 
     return totalScore;
+}
+
+let getArrangementCost = () => {
+    let totalCost = 0;
+    for (let i = 0; i < size * size; i++) {
+        totalCost += flowerArrangement[i].cost;
+    }
+    return totalCost;
 }
