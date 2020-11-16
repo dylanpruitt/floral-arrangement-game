@@ -6,13 +6,38 @@ let synergyPair = (name, points) => {
     return pair;
 }
 
-let rose = () => {
+let empty = (x, y) => {
+    let flower = {
+        name: "Empty",
+        description: "No flowers here yet.",
+        type: "na",
+        cost: 0,
+        baseScore: 0,
+        x: x,
+        y: y,
+        synergies: [],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
+    }
+    return flower;
+}
+
+let rose = (x, y) => {
     let flower = {
         name: "Rose",
         description: "A white rose.",
         type: "focal",
         cost: 5,
         baseScore: 5,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", 1),
@@ -25,17 +50,28 @@ let rose = () => {
                 synergyPair("Buttercup", 2),
                 synergyPair("Dusty Miller", 1),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let hydrangea = () => {
+let hydrangea = (x, y) => {
     let flower = {
         name: "Hydrangea",
         description: "A blue hydrangea.",
         type: "focal",
         cost: 5,
         baseScore: 5,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", -5),
@@ -48,17 +84,28 @@ let hydrangea = () => {
                 synergyPair("Buttercup", 0),
                 synergyPair("Dusty Miller", 2),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let dahlia = () => {
+let dahlia = (x, y) => {
     let flower = {
         name: "Dahlia",
         description: "A pink dahlia.",
         type: "focal",
         cost: 5,
         baseScore: 5,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", -5),
@@ -71,17 +118,28 @@ let dahlia = () => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", 0),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let sunflower = () => {
+let sunflower = (x, y) => {
     let flower = {
         name: "Sunflower",
         description: "A sunflower.",
         type: "focal",
         cost: 5,
         baseScore: 5,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", -5),
@@ -94,17 +152,28 @@ let sunflower = () => {
                 synergyPair("Buttercup", 2),
                 synergyPair("Dusty Miller", 0),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let delphinium = () => {
+let delphinium = (x, y) => {
     let flower = {
         name: "Delphinium",
         description: "Some delphinium.",
         type: "filler",
         cost: 2,
         baseScore: 0,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", 0),
@@ -117,17 +186,28 @@ let delphinium = () => {
                 synergyPair("Buttercup", 0),
                 synergyPair("Dusty Miller", 1),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let daisy = () => {
+let daisy = (x, y) => {
     let flower = {
         name: "Daisy",
         description: "A small daisy.",
         type: "filler",
         cost: 2,
         baseScore: 0,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", 1),
@@ -140,17 +220,28 @@ let daisy = () => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", 0),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let snapdragon = () => {
+let snapdragon = (x, y) => {
     let flower = {
         name: "Snapdragon",
         description: "Some snapdragon.",
         type: "filler",
         cost: 2,
         baseScore: 0,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", 1),
@@ -163,17 +254,28 @@ let snapdragon = () => {
                 synergyPair("Buttercup", 0),
                 synergyPair("Dusty Miller", 1),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let buttercup = () => {
+let buttercup = (x, y) => {
     let flower = {
         name: "Rose",
         description: "A buttercup.",
         type: "filler",
         cost: 2,
         baseScore: 0,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", 1),
@@ -186,17 +288,28 @@ let buttercup = () => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", 0),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name === flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let dustyMiller = () => {
+let dustyMiller = (x, y) => {
     let flower = {
         name: "Dusty Miller",
         description: "Some dusty miller.",
         type: "filler",
         cost: 2,
         baseScore: 0,
+        x: x,
+        y: y,
         synergies:
             [
                 synergyPair("Rose", 0),
@@ -209,8 +322,17 @@ let dustyMiller = () => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", 1),
             ],
+        getSynergy: (name) => {
+            for (let i = 0; i < flower.synergies.length; i++) {
+                if (name == flower.synergies[i].name) {
+                    return flower.synergies[i].points;
+                }
+            }
+                
+            return 0;
+        }
     }
     return flower;
 }
 
-let flowers = [rose, hydrangea, dahlia, sunflower, delphinium, daisy, snapdragon, buttercup, dustyMiller];
+let flowers = [empty, rose, hydrangea, dahlia, sunflower, delphinium, daisy, snapdragon, buttercup, dustyMiller];
