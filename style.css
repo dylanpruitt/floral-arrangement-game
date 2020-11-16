@@ -1,0 +1,40 @@
+body {
+    background-color: #bbeeff;
+    color: #777777;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#game-info {
+    position: absolute;
+    bottom: 0px;
+    left: 25px;
+    font-size: 20px;
+}
+
+#money {
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    font-size: 48px; 
+}
+
+#total-score {
+    position: absolute;
+    top: 130px;
+    right: 15px;
+}
+
+#map-container {
+    width: 50%;
+    height: 60%;
+    position: absolute;
+    left: 25%;
+    top: 15%;
+}
+
+.map-tile {
+    font-size: 10px;
+    line-height: 20px;
+    border: 2px solid whitesmoke;
+    position: absolute;
+}
