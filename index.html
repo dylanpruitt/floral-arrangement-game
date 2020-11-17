@@ -5,8 +5,9 @@
 <body>
     <div id="map-container"></div>
     <link rel="stylesheet" href="style.css">
-    <p id="money" title="How much money you currently have.">$0200</p>
-    <p id="total-score" title="Your total score this game.">0000</p>
+    <p id="money" title="How much money you currently have.">$0050</p>
+    <p id="total-score" title="Your total score this game.">00000</p>
+    <p id="inventory" title="Your inventory of flowers."></p>
     <p id="game-info">Flower Game<br>By Dylan Pruitt</p>
     <button id="shop">Shop</button>
     <button id="arrangement">Arrangement Test</button>
@@ -25,7 +26,15 @@
                 div.style.top = (y * (100 / size)) + "%";
 
                 document.getElementById("map-container").appendChild(div);
-                document.getElementById("map-tile-" + i).onclick = function () { changeMapTile (i); };
+                document.getElementById("map-tile-" + i).onclick = function () { 
+                    plantFlower(selectedFlowerName, i);
+                };
+
+                let flowerText = document.createElement("p");
+                flowerText.id = "flower-text-" + i;
+                flowerText.className = "flower-text";
+                flowerText.innerHTML = "Empty";
+                document.getElementById("map-tile-" + i).appendChild(flowerText);
             }
         }
         createMap();

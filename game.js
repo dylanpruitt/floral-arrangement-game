@@ -2,10 +2,12 @@ let flowerArrangement = [];
 let size = 3;
 
 let totalScore = 0;
-let money = 200;
+let money = 50;
 
 let inventory = [];
 let shopInventory = [];
+
+let selectedFlowerName = "Empty";
 
 let inventoryPair = (name, amount) => {
     return {
@@ -47,6 +49,7 @@ let giveStartingFlowers = () => {
         let amount = 12;
         addItem(inventory, flower.name, amount);
     }
+    updateInventoryText();
 }
 
 let arrangement = () => {
@@ -54,15 +57,16 @@ let arrangement = () => {
 
     let arranging = true;
     while (arranging) {
-        let message = "ARRANGEMENT: Enter a number to plant flowers (-1 to quit)\n";
+        let message = "ARRANGEMENT: Enter a number to plant flowers (-1 to quit)<br>";
         message += "$" + money + "\n";
         for (let i = 0; i < inventory.length; i++) {
-            message += i + " - " + inventory[i].name + " (" + inventory[i].amount + ")\n"; 
+            message += i + " - " + inventory[i].name + " (" + inventory[i].amount + ")<br>"; 
         }
         message += "-----------------\n";
         for (let i = 0; i < flowerArrangement.length; i++) {
-            message += i + " - " + flowerArrangement[i].name + "\n"; 
+            message += i + " - " + flowerArrangement[i].name + "<br>"; 
         }
+        document.getElementById("inventory").innerHTML = message;
         let input = parseInt(prompt(message));
         if (input == -1) {
             arranging = false;
@@ -83,11 +87,50 @@ let arrangement = () => {
         }
     }
 
+    updateMoneyAndScore();    
+}
+
+let plantFlower = (flowerName, index) => {
+    let x = index / size;
+    let y = index % size;
+    let flower = flowers[getFlowerIndexFromName(flowerName)](x, y);
+    let flowerInventoryIndex = returnInventoryIndex(inventory, flower.name);
+
+    if (flowerInventoryIndex >= 0 && index >= 0 && index < flowerArrangement.length) {
+        if (flowerArrangement[index].name === "Empty") {
+            flowerArrangement[index] = flower;
+        } else {
+            let previousFlowerName = flowerArrangement[index].name;
+            addItem(inventory, previousFlowerName, 1);
+        }
+
+        addItem(inventory, flower.name, -1);
+        if (inventory[flowerInventoryIndex].amount <= 0) {
+            inventory.splice(flowerInventoryIndex, 1);
+        }
+
+        flowerArrangement[index] = flower;
+    }
+
+    for (let i = 0; i < flowerArrangement.length; i++) {
+        updateFlowerText(i, flowerArrangement[i].name);
+    }
+    updateInventoryText();
+}
+
+let updateFlowerText = (index, flowerName) => {
+    let x = Math.floor(index / size);
+    let y = index % size;
+    let score = getFlowerScore(x, y);
+    document.getElementById("flower-text-" + index).innerHTML = flowerName + " (" + score + ")";
+}
+
+let updateMoneyAndScore = () => {
     money += getArrangementScore();
     totalScore += getArrangementScore();
     let moneyText = document.getElementById("money");
     moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
-    document.getElementById("total-score").innerHTML = totalScore.toString().padStart(4, "0");
+    document.getElementById("total-score").innerHTML = totalScore.toString().padStart(5, "0");
     console.log("Net profit: $" + (getArrangementScore() - getArrangementCost()));
 }
 
@@ -169,11 +212,24 @@ let buyItem = (index, amount) => {
     if (money >= cost) {
         money -= cost;
         addItem(inventory, flowerName, amount);
+        updateInventoryText();
         shopInventory[index].amount -= amount;
         if (shopInventory[index].amount <= 0) {
             shopInventory.splice(index, 1);
         }   
     }
+}
+
+let updateInventoryText = () => {
+    let message = "INVENTORY<br>";
+    for (let i = 0; i < inventory.length; i++) {
+        message += inventory[i].name + " (" + inventory[i].amount + ")<br>"; 
+    }
+    message += "-----------------\n";
+    for (let i = 0; i < flowerArrangement.length; i++) {
+        message += i + " - " + flowerArrangement[i].name + "<br>"; 
+    }
+    document.getElementById("inventory").innerHTML = message;
 }
 
 let restockShopInventory = (numberOfItems) => {
