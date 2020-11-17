@@ -15,21 +15,85 @@ let inventoryPair = (name, amount) => {
 }
 
 let gameLoop = () => {
-    // give player starting flowers
-    // a r r a n g e m e n t
-        // input
-        // confirm finished
-        // check score
-        // if bankrupt goto lost
-    // after every three arrangements
-        // restock shop
-        // do shop
-    // if lost
-        // high score logic
+    let looping = true;
+    let arrangementNumber = 1;
+
+    giveStartingFlowers();
+    while (looping) {
+        arrangement();
+        if (arrangementNumber % 3 == 0) {
+            restockShopInventory(2);
+            shop();
+        }
+        arrangementNumber++;
+        if (money <= 0) {
+            looping = false;
+        }
+    }
+
+    if (money <= 0) {
+        alert("Game over! Your score: " + totalScore);
+    }
+}
+
+let giveStartingFlowers = () => {
+    let flowerTypes = 4;
+    for (let i = 0; i < flowerTypes; i++) {
+        let randomIndex = 0;
+        while (randomIndex == 0) {
+            randomIndex = Math.floor(Math.random() * flowers.length);
+        }
+        let flower = flowers[randomIndex](-1, -1);
+        let amount = 12;
+        addItem(inventory, flower.name, amount);
+    }
+}
+
+let arrangement = () => {
+    generateEmptyArrangement();
+
+    let arranging = true;
+    while (arranging) {
+        let message = "ARRANGEMENT: Enter a number to plant flowers (-1 to quit)\n";
+        message += "$" + money + "\n";
+        for (let i = 0; i < inventory.length; i++) {
+            message += i + " - " + inventory[i].name + " (" + inventory[i].amount + ")\n"; 
+        }
+        message += "-----------------\n";
+        for (let i = 0; i < flowerArrangement.length; i++) {
+            message += i + " - " + flowerArrangement[i].name + "\n"; 
+        }
+        let input = parseInt(prompt(message));
+        if (input == -1) {
+            arranging = false;
+        } else if (input < inventory.length) {
+            let index = input;
+            message = "X coordinate to plant: ";
+            let x = parseInt(prompt(message));
+            message = "Y coordinate to plant: ";
+            let y = parseInt(prompt(message));
+            let flowerName = inventory[index].name;
+            let flowerIndex = getFlowerIndexFromName(flowerName);
+            let flowerArrangementIndex = x * size + y;
+            flowerArrangement[flowerArrangementIndex] = flowers[flowerIndex](x, y);
+            inventory[index].amount--;
+            if (inventory[index].amount <= 0) {
+                inventory.splice(index, 1);
+            }
+        }
+    }
+
+    money += getArrangementScore();
+    totalScore += getArrangementScore();
+    let moneyText = document.getElementById("money");
+    moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
+    document.getElementById("total-score").innerHTML = totalScore.toString().padStart(4, "0");
+    console.log("Net profit: $" + (getArrangementScore() - getArrangementCost()));
 }
 
 let generateEmptyArrangement = () => {
     let EMPTY = 0;
+    flowerArrangement = [];
 
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {

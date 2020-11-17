@@ -9,6 +9,7 @@
     <p id="total-score" title="Your total score this game.">0000</p>
     <p id="game-info">Flower Game<br>By Dylan Pruitt</p>
     <button id="shop">Shop</button>
+    <button id="arrangement">Arrangement Test</button>
     <script src="flowers.js"></script>
     <script src="game.js"></script>
     <script>
@@ -28,11 +29,14 @@
             }
         }
         createMap();
-        restockShopInventory(5);
+        restockShopInventory(6);
         document.getElementById("shop").onclick = function () { 
             shop();
             let moneyText = document.getElementById("money");
             moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
+        }
+        document.getElementById("arrangement").onclick = function () { 
+            gameLoop();
         }
     </script>
 </body>
