@@ -178,6 +178,7 @@ let shop = () => {
         input.name = "shop-input-" + i;
         input.min = 0;
         input.max = shopInventory[i].amount;
+        input.value = 0;
         input.onchange = function () { updateCheckoutText(); };
         shopContainer.appendChild(input);
 
@@ -198,8 +199,10 @@ let checkout = () => {
     if (money >= price) {
         for (let i = 0; i < shopInventory.length; i++) {
             let input = document.getElementById("shop-input-" + i);
-            let amount = input.value;
-            addItem(inventory, shopInventory[i].name, amount);
+            let amount = parseInt(input.value);
+            if (amount > 0) {
+                addItem(inventory, shopInventory[i].name, amount);
+            }
         }
         money -= price;
 
@@ -223,7 +226,7 @@ let getCheckoutPrice = () => {
         let flowerIndex = getFlowerIndexFromName(shopInventory[i].name);
         let flower = flowers[flowerIndex](-1, -1);
         let input = document.getElementById("shop-input-" + i);
-        let amount = input.value;
+        let amount = parseInt(input.value);
         price += flower.cost * amount;
     }
 
