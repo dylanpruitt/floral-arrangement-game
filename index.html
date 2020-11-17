@@ -11,6 +11,7 @@
     <p id="game-info">Flower Game<br>By Dylan Pruitt</p>
     <button id="shop">Shop</button>
     <button id="arrangement">Submit Arrangement</button>
+    <a id="instructions" href="instructions.html">How to play</a>
     <script src="flowers.js"></script>
     <script src="game.js"></script>
     <script>
@@ -43,11 +44,7 @@
         restockShopInventory(6);
         generateEmptyArrangement();
         giveStartingFlowers();
-        document.getElementById("shop").onclick = function () { 
-            shop();
-            let moneyText = document.getElementById("money");
-            moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
-        }
+
         document.getElementById("arrangement").onclick = function () { 
             submitArrangement();
         }
