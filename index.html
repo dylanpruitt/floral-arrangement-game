@@ -5,9 +5,10 @@
 <body>
     <div id="map-container"></div>
     <link rel="stylesheet" href="style.css">
-    <p id="money" title="How much money you currently have.">$0050</p>
+    <p id="money" title="How much money you currently have.">$0200</p>
     <p id="total-score" title="Your total score this game.">0000</p>
     <p id="game-info">Flower Game<br>By Dylan Pruitt</p>
+    <button id="shop">Shop</button>
     <script src="flowers.js"></script>
     <script src="game.js"></script>
     <script>
@@ -27,6 +28,12 @@
             }
         }
         createMap();
+        restockShopInventory(5);
+        document.getElementById("shop").onclick = function () { 
+            shop();
+            let moneyText = document.getElementById("money");
+            moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
+        }
     </script>
 </body>
 </html>

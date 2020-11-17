@@ -332,3 +332,14 @@ let dustyMiller = (x, y) => {
 }
 
 let flowers = [empty, rose, hydrangea, dahlia, sunflower, delphinium, daisy, snapdragon, buttercup, dustyMiller];
+
+let getFlowerIndexFromName = (name) => {
+    let NOT_FOUND = -1;
+    for (let i = 0; i < flowers.length; i++) {
+        let flower = flowers[i](-1, -1);
+        if (flower.name === name) {
+            return i;
+        }
+    }
+    return NOT_FOUND;
+}

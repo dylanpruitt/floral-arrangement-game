@@ -2,7 +2,7 @@ let flowerArrangement = [];
 let size = 3;
 
 let totalScore = 0;
-let money = 100;
+let money = 200;
 
 let inventory = [];
 let shopInventory = [];
@@ -76,6 +76,42 @@ let getArrangementCost = () => {
     return totalCost;
 }
 
+let shop = () => {
+    let shopping = true;
+    while (shopping) {
+        let message = "SHOP: Enter a number to buy flowers (-1 to quit)\n";
+        message += "$" + money + "\n";
+        for (let i = 0; i < shopInventory.length; i++) {
+            message += i + " - " + shopInventory[i].name + " (" + shopInventory[i].amount + ")\n"; 
+        }
+        let input = parseInt(prompt(message));
+        if (input == -1) {
+            shopping = false;
+        } else if (input < shopInventory.length) {
+            let index = input;
+            message = "Buying how much? Max: " + shopInventory[index].amount;
+            input = parseInt(prompt(message));
+            buyItem(index, input);
+        }
+    }
+}
+
+let buyItem = (index, amount) => {
+    let flowerName = shopInventory[index].name;
+    let flowerIndex = getFlowerIndexFromName(flowerName);
+    let flower = flowers[flowerIndex](-1, -1);
+    let cost = flower.cost * amount;
+
+    if (money >= cost) {
+        money -= cost;
+        addItem(inventory, flowerName, amount);
+        shopInventory[index].amount -= amount;
+        if (shopInventory[index].amount <= 0) {
+            shopInventory.splice(index, 1);
+        }   
+    }
+}
+
 let restockShopInventory = (numberOfItems) => {
     for (let i = 0; i < numberOfItems; i++) {
         let randomIndex = 0;
@@ -89,7 +125,7 @@ let restockShopInventory = (numberOfItems) => {
 }
 
 let addItem = (inventory, name, amount) => {
-    let index = returnInventoryIndex(shopInventory, name);
+    let index = returnInventoryIndex(inventory, name);
     if (index != -1) {
         inventory[index].amount += amount;
     } else {
