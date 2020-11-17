@@ -147,6 +147,49 @@ let getArrangementCost = () => {
 
 let shop = () => {
     let shopping = true;
+
+    let shopContainer = document.createElement("div");
+    shopContainer.id = "shop-container";
+    document.body.appendChild(shopContainer);
+
+    let text = document.createElement("p");
+    text.id = "shop-header";
+    text.innerHTML = "SHOP";
+    shopContainer.appendChild(text);
+
+    let checkoutText = document.createElement("p");
+    checkoutText.id = "checkout-price";
+    checkoutText.innerHTML = "Checkout price: $0";
+    shopContainer.appendChild(checkoutText);
+
+    for (let i = 0; i < shopInventory.length; i++) {
+        let flowerIndex = getFlowerIndexFromName(shopInventory[i].name);
+        let flower = flowers[flowerIndex](-1, -1);
+        let message = shopInventory[i].name + " (" + shopInventory[i].amount + ") - $" + flower.cost;
+        let itemDescription = document.createElement("label");
+        itemDescription.innerHTML = message + "   ";
+        itemDescription.for = "shop-input-" + i;
+        shopContainer.appendChild(itemDescription);
+
+        let input = document.createElement("input");
+        input.type = "number";
+        input.id = "shop-input-" + i;
+        input.className = "shop-input";
+        input.name = "shop-input-" + i;
+        input.min = 0;
+        input.max = shopInventory[i].amount;
+        input.onchange = function () { updateCheckoutText(); };
+        shopContainer.appendChild(input);
+
+        shopContainer.appendChild(document.createElement("br"));
+        shopContainer.appendChild(document.createElement("br"));
+    }
+
+    let checkoutButton = document.createElement("button");
+    checkoutButton.id = "checkout-button";
+    checkoutButton.innerHTML = "Checkout";
+    shopContainer.appendChild(checkoutButton);
+
     while (shopping) {
         let message = "SHOP: Enter a number to buy flowers (-1 to quit)\n";
         message += "$" + money + "\n";
@@ -163,6 +206,25 @@ let shop = () => {
             buyItem(index, input);
         }
     }
+}
+
+let updateCheckoutText = () => {
+    let checkoutText = document.getElementById("checkout-price");
+    checkoutText.innerHTML = "Checkout price: $" + getCheckoutPrice();
+}
+
+let getCheckoutPrice = () => {
+    let price = 0;
+
+    for (let i = 0; i < shopInventory.length; i++) {
+        let flowerIndex = getFlowerIndexFromName(shopInventory[i].name);
+        let flower = flowers[flowerIndex](-1, -1);
+        let input = document.getElementById("shop-input-" + i);
+        let amount = input.value;
+        price += flower.cost * amount;
+    }
+
+    return price;
 }
 
 let buyItem = (index, amount) => {

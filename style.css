@@ -56,6 +56,38 @@ body {
     position: absolute;
 }
 
+#shop-container {
+    width: 50%;
+    height: 60%;
+    position: absolute;
+    left: 25%;
+    top: 15%;
+    border: 3px solid whitesmoke;
+    background-color: #99ccdd;
+}
+
+#shop-header {
+    font-size: 32px;
+    text-align: center;
+}
+
+.shop-input {
+    position: absolute;
+    right: 5%;
+}
+
+#checkout-price {
+    text-align: center;
+}
+
+#checkout-button {
+    position: absolute;
+    bottom: 5%;
+    left: 30%;
+    width: 40%;
+    height: 15%;
+}
+
 .flower-text {
     text-align: center;
     padding: 25% 0;
