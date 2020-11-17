@@ -188,23 +188,26 @@ let shop = () => {
     let checkoutButton = document.createElement("button");
     checkoutButton.id = "checkout-button";
     checkoutButton.innerHTML = "Checkout";
+    checkoutButton.onclick = function () { checkout(); }
     shopContainer.appendChild(checkoutButton);
+}
 
-    while (shopping) {
-        let message = "SHOP: Enter a number to buy flowers (-1 to quit)\n";
-        message += "$" + money + "\n";
+let checkout = () => {
+    let price = getCheckoutPrice();
+
+    if (money >= price) {
         for (let i = 0; i < shopInventory.length; i++) {
-            message += i + " - " + shopInventory[i].name + " (" + shopInventory[i].amount + ")\n"; 
+            let input = document.getElementById("shop-input-" + i);
+            let amount = input.value;
+            addItem(inventory, shopInventory[i].name, amount);
         }
-        let input = parseInt(prompt(message));
-        if (input == -1) {
-            shopping = false;
-        } else if (input < shopInventory.length) {
-            let index = input;
-            message = "Buying how much? Max: " + shopInventory[index].amount;
-            input = parseInt(prompt(message));
-            buyItem(index, input);
-        }
+        money -= price;
+
+        document.body.removeChild(document.getElementById("shop-container"));
+    
+        let moneyText = document.getElementById("money");
+        moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
+        updateInventoryText();
     }
 }
 
