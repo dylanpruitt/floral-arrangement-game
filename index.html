@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="style.css">
     <p id="money" title="How much money you currently have.">$0050</p>
     <p id="total-score" title="Your total score this game.">00000</p>
-    <p id="inventory" title="Your inventory of flowers."></p>
+    <div id="inventory" title="Your inventory of flowers."></div>
     <p id="game-info">Flower Game<br>By Dylan Pruitt</p>
     <button id="shop">Shop</button>
-    <button id="arrangement">Arrangement Test</button>
+    <button id="arrangement">Submit Arrangement</button>
     <script src="flowers.js"></script>
     <script src="game.js"></script>
     <script>
@@ -27,7 +27,9 @@
 
                 document.getElementById("map-container").appendChild(div);
                 document.getElementById("map-tile-" + i).onclick = function () { 
-                    plantFlower(selectedFlowerName, i);
+                    if (stillPlaying) {
+                        plantFlower(selectedFlowerName, i);
+                    }
                 };
 
                 let flowerText = document.createElement("p");
@@ -39,13 +41,15 @@
         }
         createMap();
         restockShopInventory(6);
+        generateEmptyArrangement();
+        giveStartingFlowers();
         document.getElementById("shop").onclick = function () { 
             shop();
             let moneyText = document.getElementById("money");
             moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
         }
         document.getElementById("arrangement").onclick = function () { 
-            gameLoop();
+            submitArrangement();
         }
     </script>
 </body>

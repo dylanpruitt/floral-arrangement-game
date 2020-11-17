@@ -3,6 +3,8 @@ let size = 3;
 
 let totalScore = 0;
 let money = 50;
+let arrangementNumber = 1;
+let stillPlaying = true;
 
 let inventory = [];
 let shopInventory = [];
@@ -14,28 +16,6 @@ let inventoryPair = (name, amount) => {
         name: name,
         amount, amount
     };
-}
-
-let gameLoop = () => {
-    let looping = true;
-    let arrangementNumber = 1;
-
-    giveStartingFlowers();
-    while (looping) {
-        arrangement();
-        if (arrangementNumber % 3 == 0) {
-            restockShopInventory(2);
-            shop();
-        }
-        arrangementNumber++;
-        if (money <= 0) {
-            looping = false;
-        }
-    }
-
-    if (money <= 0) {
-        alert("Game over! Your score: " + totalScore);
-    }
 }
 
 let giveStartingFlowers = () => {
@@ -52,42 +32,24 @@ let giveStartingFlowers = () => {
     updateInventoryText();
 }
 
-let arrangement = () => {
-    generateEmptyArrangement();
-
-    let arranging = true;
-    while (arranging) {
-        let message = "ARRANGEMENT: Enter a number to plant flowers (-1 to quit)<br>";
-        message += "$" + money + "\n";
-        for (let i = 0; i < inventory.length; i++) {
-            message += i + " - " + inventory[i].name + " (" + inventory[i].amount + ")<br>"; 
+let submitArrangement = () => {
+    if (stillPlaying) {
+        updateMoneyAndScore();
+        if (arrangementNumber % 3 == 0) {
+            shop();
         }
-        message += "-----------------\n";
+    
+        arrangementNumber++;
+        generateEmptyArrangement(); 
         for (let i = 0; i < flowerArrangement.length; i++) {
-            message += i + " - " + flowerArrangement[i].name + "<br>"; 
-        }
-        document.getElementById("inventory").innerHTML = message;
-        let input = parseInt(prompt(message));
-        if (input == -1) {
-            arranging = false;
-        } else if (input < inventory.length) {
-            let index = input;
-            message = "X coordinate to plant: ";
-            let x = parseInt(prompt(message));
-            message = "Y coordinate to plant: ";
-            let y = parseInt(prompt(message));
-            let flowerName = inventory[index].name;
-            let flowerIndex = getFlowerIndexFromName(flowerName);
-            let flowerArrangementIndex = x * size + y;
-            flowerArrangement[flowerArrangementIndex] = flowers[flowerIndex](x, y);
-            inventory[index].amount--;
-            if (inventory[index].amount <= 0) {
-                inventory.splice(index, 1);
-            }
-        }
-    }
+            updateFlowerText(i, flowerArrangement[i].name);
+        } 
+    } 
 
-    updateMoneyAndScore();    
+    if (money <= 0) {
+        alert("Game over! Your score: " + totalScore);
+        stillPlaying = false;
+    }
 }
 
 let plantFlower = (flowerName, index) => {
@@ -221,15 +183,22 @@ let buyItem = (index, amount) => {
 }
 
 let updateInventoryText = () => {
-    let message = "INVENTORY<br>";
+    let inventoryDIV = document.getElementById("inventory");
+    inventoryDIV.innerHTML = "";
+    let text = document.createElement("p");
+    text.innerHTML = "INVENTORY";
+    inventoryDIV.appendChild(text);
     for (let i = 0; i < inventory.length; i++) {
-        message += inventory[i].name + " (" + inventory[i].amount + ")<br>"; 
+        let message = inventory[i].name + " (" + inventory[i].amount + ")"; 
+        let inventoryText = document.createElement("p");
+        inventoryText.id = "inventory-text-" + i;
+        inventoryText.innerHTML = message;
+        inventoryText.onclick = function () { 
+            selectedFlowerName = inventory[i].name;
+            console.log("selected " + selectedFlowerName);
+        };
+        inventoryDIV.appendChild(inventoryText);
     }
-    message += "-----------------\n";
-    for (let i = 0; i < flowerArrangement.length; i++) {
-        message += i + " - " + flowerArrangement[i].name + "<br>"; 
-    }
-    document.getElementById("inventory").innerHTML = message;
 }
 
 let restockShopInventory = (numberOfItems) => {
