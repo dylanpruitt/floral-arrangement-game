@@ -42,8 +42,11 @@ let submitArrangement = () => {
         arrangementNumber++;
         generateEmptyArrangement(); 
         for (let i = 0; i < flowerArrangement.length; i++) {
-            updateFlowerText(i, flowerArrangement[i].name);
+            updateFlowerText(i);
+            updateFlowerImage(i);
         } 
+
+        restockShopInventory(1);
     } 
 
     if (money <= 0) {
@@ -210,9 +213,12 @@ let checkout = () => {
             let amount = parseInt(input.value);
             if (amount > 0) {
                 addItem(inventory, shopInventory[i].name, amount);
+                addItem(shopInventory, shopInventory[i].name, amount * -1);
             }
         }
+    
         money -= price;
+        updateShopInventory();
 
         document.body.removeChild(document.getElementById("shop-container"));
     
@@ -220,6 +226,16 @@ let checkout = () => {
         moneyText.innerHTML = "$" + money.toString().padStart(4, "0");
         updateInventoryText();
     }
+}
+
+let updateShopInventory = () => {
+    let tempInventory = [];
+    for (let i = 0; i < shopInventory.length; i++) {
+        if (shopInventory[i].amount > 0) {
+            tempInventory.push(shopInventory[i]);
+        }
+    }
+    shopInventory = tempInventory;
 }
 
 let updateCheckoutText = () => {
