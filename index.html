@@ -14,37 +14,6 @@
     <script src="flowers.js"></script>
     <script src="game.js"></script>
     <script>
-        let createMap = function () {
-            for (let i = 0; i < size * size; i++) {
-                let x = i % size, y = Math.floor(i / size);
-                var div = document.createElement("div");
-                div.id = "map-tile-" + i;
-                div.className = "map-tile";
-                div.style.width = (100 / size) + "%";
-                div.style.height = (100 / size) + "%";
-                div.style.left = (x * (100 / size)) + "%";
-                div.style.top = (y * (100 / size)) + "%";
-
-                document.getElementById("map-container").appendChild(div);
-                document.getElementById("map-tile-" + i).onclick = function () { 
-                    if (stillPlaying) {
-                        plantFlower(selectedFlowerName, i);
-                    }
-                };
-
-                let flowerImage = document.createElement("img");
-                flowerImage.id = "flower-image-" + i;
-                flowerImage.className = "flower-image";
-                flowerImage.src = "assets/empty.jfif";
-                document.getElementById("map-tile-" + i).appendChild(flowerImage);
-
-                let flowerText = document.createElement("p");
-                flowerText.id = "flower-text-" + i;
-                flowerText.className = "flower-text";
-                flowerText.innerHTML = "Empty";
-                document.getElementById("map-tile-" + i).appendChild(flowerText);
-            }
-        }
         createMap();
         restockShopInventory(5);
         generateEmptyArrangement();

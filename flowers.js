@@ -321,11 +321,11 @@ let dustyMiller = (x, y) => {
         y: y,
         synergies:
             [
-                synergyPair("Delphinium", 2),
-                synergyPair("Daisy", 1),
-                synergyPair("Snapdragon", 2),
-                synergyPair("Buttercup", 1),
-                synergyPair("Dusty Miller", 1),
+                synergyPair("Delphinium", 3),
+                synergyPair("Daisy", 2),
+                synergyPair("Snapdragon", 3),
+                synergyPair("Buttercup", 2),
+                synergyPair("Dusty Miller", 2),
             ],
         picture: "dusty-miller.jfif", 
         getSynergy: (name) => {

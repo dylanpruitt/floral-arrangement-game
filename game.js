@@ -34,7 +34,7 @@ let giveStartingFlowers = () => {
 
 let submitArrangement = () => {
     if (stillPlaying) {
-        
+
         updateMoneyAndScore();
         restockShopInventory(1);
         if (arrangementNumber % 3 == 0) {
@@ -42,7 +42,15 @@ let submitArrangement = () => {
         }
     
         arrangementNumber++;
+        if (arrangementNumber % 7 == 0) {
+            size = 5;
+        } else {
+            size = 3;
+        }
+
         generateEmptyArrangement(); 
+        document.getElementById("map-container").innerHTML = "";
+        createMap();
         for (let i = 0; i < flowerArrangement.length; i++) {
             updateFlowerText(i);
             updateFlowerImage(i);
@@ -88,6 +96,7 @@ let updateFlowerText = (index) => {
     let x = Math.floor(index / size);
     let y = index % size;
     let score = getFlowerScore(x, y);
+    
     document.getElementById("flower-text-" + index).innerHTML = score;
     document.getElementById("flower-text-" + index).title = "How much score this flower gives you.";
 }
@@ -322,4 +331,36 @@ let returnInventoryIndex = (inventory, name) => {
         }
     }
     return NOT_FOUND;
+}
+
+let createMap = function () {
+    for (let i = 0; i < size * size; i++) {
+        let x = i % size, y = Math.floor(i / size);
+        var div = document.createElement("div");
+        div.id = "map-tile-" + i;
+        div.className = "map-tile";
+        div.style.width = (100 / size) + "%";
+        div.style.height = (100 / size) + "%";
+        div.style.left = (x * (100 / size)) + "%";
+        div.style.top = (y * (100 / size)) + "%";
+
+        document.getElementById("map-container").appendChild(div);
+        document.getElementById("map-tile-" + i).onclick = function () { 
+            if (stillPlaying) {
+                plantFlower(selectedFlowerName, i);
+            }
+        };
+
+        let flowerImage = document.createElement("img");
+        flowerImage.id = "flower-image-" + i;
+        flowerImage.className = "flower-image";
+        flowerImage.src = "assets/empty.jfif";
+        document.getElementById("map-tile-" + i).appendChild(flowerImage);
+
+        let flowerText = document.createElement("p");
+        flowerText.id = "flower-text-" + i;
+        flowerText.className = "flower-text";
+        flowerText.innerHTML = "Empty";
+        document.getElementById("map-tile-" + i).appendChild(flowerText);
+    }
 }
