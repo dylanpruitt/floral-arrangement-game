@@ -34,7 +34,9 @@ let giveStartingFlowers = () => {
 
 let submitArrangement = () => {
     if (stillPlaying) {
+        
         updateMoneyAndScore();
+        restockShopInventory(1);
         if (arrangementNumber % 3 == 0) {
             shop();
         }
@@ -45,8 +47,6 @@ let submitArrangement = () => {
             updateFlowerText(i);
             updateFlowerImage(i);
         } 
-
-        restockShopInventory(1);
     } 
 
     if (money <= 0) {
