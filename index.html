@@ -33,6 +33,12 @@
                     }
                 };
 
+                let flowerImage = document.createElement("img");
+                flowerImage.id = "flower-image-" + i;
+                flowerImage.className = "flower-image";
+                flowerImage.src = "assets/empty.jfif";
+                document.getElementById("map-tile-" + i).appendChild(flowerImage);
+
                 let flowerText = document.createElement("p");
                 flowerText.id = "flower-text-" + i;
                 flowerText.className = "flower-text";

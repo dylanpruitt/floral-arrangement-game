@@ -16,6 +16,7 @@ let empty = (x, y) => {
         x: x,
         y: y,
         synergies: [],
+        picture: "empty.jfif",
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -50,6 +51,7 @@ let rose = (x, y) => {
                 synergyPair("Buttercup", 2),
                 synergyPair("Dusty Miller", 1),
             ],
+        picture: "rose.jfif",
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -84,6 +86,7 @@ let hydrangea = (x, y) => {
                 synergyPair("Buttercup", 0),
                 synergyPair("Dusty Miller", 2),
             ],
+        picture: "hydrangea.jfif",
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -118,6 +121,7 @@ let dahlia = (x, y) => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", 0),
             ],
+        picture: "dahlia.jfif",
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -152,6 +156,7 @@ let sunflower = (x, y) => {
                 synergyPair("Buttercup", 2),
                 synergyPair("Dusty Miller", 0),
             ],
+        picture: "sunflower.jfif",        
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -186,6 +191,7 @@ let delphinium = (x, y) => {
                 synergyPair("Buttercup", 0),
                 synergyPair("Dusty Miller", 1),
             ],
+        picture: "delphinium.jfif", 
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -220,6 +226,7 @@ let daisy = (x, y) => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", -1),
             ],
+        picture: "daisy.jfif", 
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -254,6 +261,7 @@ let snapdragon = (x, y) => {
                 synergyPair("Buttercup", -1),
                 synergyPair("Dusty Miller", 1),
             ],
+        picture: "snapdragon.jfif", 
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -288,6 +296,7 @@ let buttercup = (x, y) => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", -1),
             ],
+        picture: "buttercup.jfif", 
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name === flower.synergies[i].name) {
@@ -318,6 +327,7 @@ let dustyMiller = (x, y) => {
                 synergyPair("Buttercup", 1),
                 synergyPair("Dusty Miller", 1),
             ],
+        picture: "dusty-miller.jfif", 
         getSynergy: (name) => {
             for (let i = 0; i < flower.synergies.length; i++) {
                 if (name == flower.synergies[i].name) {

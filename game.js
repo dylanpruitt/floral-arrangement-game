@@ -75,16 +75,24 @@ let plantFlower = (flowerName, index) => {
     }
 
     for (let i = 0; i < flowerArrangement.length; i++) {
-        updateFlowerText(i, flowerArrangement[i].name);
+        updateFlowerText(i);
+        updateFlowerImage(i);
     }
     updateInventoryText();
 }
 
-let updateFlowerText = (index, flowerName) => {
+let updateFlowerText = (index) => {
     let x = Math.floor(index / size);
     let y = index % size;
     let score = getFlowerScore(x, y);
-    document.getElementById("flower-text-" + index).innerHTML = flowerName + " (" + score + ")";
+    document.getElementById("flower-text-" + index).innerHTML = score;
+    document.getElementById("flower-text-" + index).title = "How much score this flower gives you.";
+}
+
+let updateFlowerImage = (index) => {
+    let flower = flowerArrangement[index];
+    let imageSource = "assets/" + flower.picture;
+    document.getElementById("flower-image-" + index).src = imageSource;
 }
 
 let updateMoneyAndScore = () => {
